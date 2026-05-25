@@ -3,590 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Norte Conectado - Orçamento Executivo v9</title>
+    <title>Orçamento Executivo v9</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        /* Base */
         :root {
-            --primary: #0ea5e9;
-            --primary-dark: #0284c7;
-            --secondary: #10b981;
-            --dark: #0f172a;
-            --dark-light: #1e293b;
-            --gray-light: #f8fafc;
-            --gray-border: #e2e8f0;
-            --text-main: #334155;
-            --text-muted: #64748b;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #334155;
+            --title: #0f172a;
+            --primary: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border: #e2e8f0;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.5; }
+        h1, h2, h3, .metric-val { font-family: 'Space Grotesk', sans-serif; color: var(--title); }
         
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-main);
-            background-color: #ffffff;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4, .serif { font-family: 'Merriweather', serif; color: var(--dark); }
-
-        /* Typography */
-        p { margin-bottom: 1.5rem; font-size: 1.125rem; }
-        .text-lead { font-size: 1.25rem; color: var(--text-main); font-weight: 300; }
-        .highlight-text { color: var(--primary); font-weight: 600; }
-
-        /* Navigation */
-        header {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--gray-border);
-            z-index: 1000;
-            padding: 1rem 0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-        .nav-container {
-            max-width: 1280px; margin: 0 auto; padding: 0 2rem;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo { font-family: 'Merriweather', serif; font-weight: 900; font-size: 1.25rem; color: var(--dark); text-decoration: none; }
-        .logo span { color: var(--primary); }
-        .nav-links { display: flex; gap: 2rem; }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; font-size: 0.95rem; transition: color 0.3s; }
+        /* Layout */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+        
+        /* Nav */
+        nav { background: var(--surface); padding: 16px 0; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+        .nav-links { display: flex; gap: 24px; }
+        .nav-links a { color: var(--text); text-decoration: none; font-size: 14px; }
         .nav-links a:hover { color: var(--primary); }
 
-        /* General Section Layout */
-        section { padding: 6rem 2rem; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .section-header { text-align: center; margin-bottom: 4rem; max-width: 800px; margin-inline: auto; }
-        .section-header .badge {
-            display: inline-block; background: #e0f2fe; color: var(--primary-dark);
-            padding: 0.5rem 1rem; border-radius: 50px; font-weight: 600; font-size: 0.875rem; margin-bottom: 1rem;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .section-header h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
-
-        /* Hero Section */
-        .hero {
-            padding-top: 10rem; padding-bottom: 8rem;
-            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-            position: relative; overflow: hidden;
-        }
-        .hero::before {
-            content: ''; position: absolute; right: -10%; top: -20%; width: 50%; height: 100%;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
-        }
-        .hero-content { max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
-        .hero h1 { font-size: 4rem; line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -1px; }
-        .hero .subtitle { font-size: 1.5rem; color: var(--text-muted); margin-bottom: 3rem; font-weight: 300; }
-        .btn-primary {
-            display: inline-block; background: var(--primary); color: white; padding: 1rem 2.5rem;
-            border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1.125rem;
-            transition: background 0.3s, transform 0.3s; box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.3);
-        }
-        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
-
-        /* Budget Overview */
-        .budget-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem; }
-        .budget-card {
-            background: white; border: 1px solid var(--gray-border); border-radius: 12px; padding: 2rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border-top: 5px solid; transition: transform 0.3s;
-        }
-        .budget-card:hover { transform: translateY(-5px); }
-        .budget-card.c-blue { border-top-color: var(--primary); }
-        .budget-card.c-green { border-top-color: var(--secondary); }
-        .budget-card.c-orange { border-top-color: #f59e0b; }
-        .budget-card.c-slate { border-top-color: #64748b; }
-        .budget-card .percent { font-size: 3rem; font-weight: 900; font-family: 'Merriweather', serif; line-height: 1; margin-bottom: 0.5rem; }
-        .budget-card.c-blue .percent { color: var(--primary); }
-        .budget-card.c-green .percent { color: var(--secondary); }
-        .budget-card.c-orange .percent { color: #f59e0b; }
-        .budget-card.c-slate .percent { color: #64748b; }
-        .budget-card h4 { font-family: 'Inter', sans-serif; font-size: 1.125rem; text-transform: uppercase; margin-bottom: 1rem; color: var(--text-muted);}
-        .budget-card .val { font-size: 1.5rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem; border-bottom: 1px solid var(--gray-border); padding-bottom: 1rem;}
-
-        /* Detailed Budget Table */
-        .table-container { overflow-x: auto; background: white; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 1px solid var(--gray-border); margin-bottom: 2rem;}
-        .budget-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .budget-table th { background: var(--dark); color: white; padding: 1.25rem 1.5rem; font-weight: 600; font-size: 1rem; letter-spacing: 0.5px;}
-        .budget-table td { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-border); font-size: 1rem; color: var(--text-main); }
-        .budget-table tr:last-child td { border-bottom: none; }
-        .budget-table tbody tr:hover { background-color: var(--gray-light); }
-        .budget-table .row-total td { background: #e0f2fe; font-weight: 700; color: var(--dark); font-size: 1.125rem; border-top: 2px solid var(--primary);}
-        .budget-table .currency { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;}
+        /* Hero */
+        .hero { background: var(--title); color: white; padding: 100px 0; text-align: center; }
+        .hero h1 { color: white; font-size: 56px; margin-bottom: 24px; line-height: 1.1; }
+        .hero p { font-size: 20px; color: #94a3b8; max-width: 700px; margin: 0 auto; }
         
-        .budget-explanation { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;}
-        .explanation-card { background: white; padding: 1.5rem; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.02);}
+        /* Metrics Grid */
+        .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: -40px; }
+        .metric-card { background: var(--surface); padding: 32px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); text-align: center; border: 1px solid var(--border); }
+        .metric-val { font-size: 40px; margin-bottom: 8px; }
+        .metric-label { font-size: 14px; text-transform: uppercase; font-weight: 600; color: var(--text); }
+        .text-success { color: var(--success); }
+        .text-primary { color: var(--primary); }
 
-        /* Operational Flow */
-        .bg-light { background-color: var(--gray-light); }
-        .flow-container { display: flex; flex-direction: column; gap: 2rem; position: relative; }
-        .flow-container::before {
-            content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px;
-            background: var(--gray-border); transform: translateX(-50%);
-        }
-        .flow-step {
-            display: flex; justify-content: space-between; align-items: center; width: 100%; position: relative;
-        }
-        .flow-step:nth-child(even) { flex-direction: row-reverse; }
-        .flow-content {
-            width: calc(50% - 3rem); background: white; padding: 2.5rem; border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border: 1px solid var(--gray-border); position: relative;
-        }
-        .flow-icon {
-            width: 80px; height: 80px; background: white; border: 4px solid var(--primary); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary);
-            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; box-shadow: 0 0 0 10px var(--gray-light);
-        }
-        .flow-step:nth-child(4) .flow-icon { border-color: var(--secondary); color: var(--secondary); }
-        .flow-content h3 { font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;}
-        .flow-content .step-num { color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; text-transform: uppercase;}
-
-        /* Detailed Features (Pillars) */
-        .feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 6rem; }
-        .feature-row:nth-child(even) { direction: rtl; }
-        .feature-row:nth-child(even) > * { direction: ltr; }
-        .feature-img { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .feature-img img { width: 100%; height: auto; display: block; object-fit: cover; aspect-ratio: 4/3;}
+        /* Direct Comparisons (The "Sacadas") */
+        .section-header { text-align: center; margin-bottom: 64px; }
+        .section-header h2 { font-size: 40px; }
         
-        .feature-text h3 { font-size: 2.25rem; margin-bottom: 1.5rem; }
-        .feature-list { list-style: none; margin: 2rem 0; }
-        .feature-list li { position: relative; padding-left: 2.5rem; margin-bottom: 1.5rem; font-size: 1.125rem; }
-        .feature-list li i { position: absolute; left: 0; top: 0.25rem; color: var(--primary); font-size: 1.5rem; }
+        .strategy-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+        .strategy-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 40px; display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; box-shadow: 0 4px 6px rgba(0,0,0,0.02);}
         
-        .success-box {
-            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
-            border-radius: 12px; padding: 2rem; color: white; margin-top: 2rem;
-            border-left: 6px solid var(--primary);
+        .strategy-title { display: flex; flex-direction: column; gap: 16px; }
+        .strategy-title i { font-size: 32px; color: var(--primary); }
+        .strategy-title h3 { font-size: 28px; }
+        
+        .strategy-content { display: flex; flex-direction: column; gap: 24px; }
+        
+        .vs-box { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .vs-item { padding: 20px; border-radius: 8px; }
+        .vs-old { background: #fef2f2; border: 1px solid #fecaca; }
+        .vs-new { background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .vs-title { font-weight: 800; font-size: 12px; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;}
+        .vs-old .vs-title { color: var(--danger); }
+        .vs-new .vs-title { color: var(--success); }
+        
+        .example-box { background: #f8fafc; border-left: 4px solid var(--primary); padding: 20px; border-radius: 0 8px 8px 0; }
+        .example-box strong { color: var(--title); display: block; margin-bottom: 8px; font-family: 'Space Grotesk', sans-serif;}
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border);}
+        th, td { padding: 16px 24px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #f1f5f9; font-weight: 600; font-size: 14px; text-transform: uppercase; color: var(--title); }
+        tr:last-child td { border-bottom: none; }
+        .val-num { font-family: monospace; font-size: 16px; text-align: right; }
+        .total-row td { background: var(--title); color: white; font-weight: 600; font-size: 18px; }
+
+        @media (max-width: 900px) {
+            .metrics { grid-template-columns: 1fr 1fr; }
+            .strategy-card { grid-template-columns: 1fr; }
+            .vs-box { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 40px; }
         }
-        .success-box.green { border-left-color: var(--secondary); }
-        .success-box h4 { color: white; font-family: 'Inter', sans-serif; font-size: 1.125rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px;}
-        .success-box h4 i { color: var(--primary); }
-        .success-box.green h4 i { color: var(--secondary); }
-        .success-box p { color: #cbd5e1; font-size: 1.125rem; margin: 0; }
-
-        /* Results / ROI */
-        .roi-section { background: var(--dark); color: white; text-align: center; padding: 8rem 2rem; }
-        .roi-section h2 { color: white; font-size: 3rem; margin-bottom: 4rem; }
-        .roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1000px; margin: 0 auto; align-items: center;}
-        .roi-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 3rem 2rem; }
-        .roi-card.highlight { background: white; color: var(--dark); transform: scale(1.1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: none;}
-        .roi-card .val { font-size: 3.5rem; font-weight: 900; font-family: 'Merriweather', serif; margin-bottom: 1rem; line-height: 1;}
-        .roi-card .label { font-size: 1.125rem; font-weight: 500; color: #94a3b8; text-transform: uppercase;}
-        .roi-card.highlight .val { color: var(--primary); }
-        .roi-card.highlight .label { color: var(--dark-light); font-weight: 700;}
-        .roi-card.green .val { color: var(--secondary); }
-
-        /* Footer */
-        footer { background: #020617; color: #64748b; padding: 4rem 2rem; text-align: center; }
-        footer p { margin: 0; font-size: 1rem; }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .hero h1 { font-size: 3rem; }
-            .feature-row { grid-template-columns: 1fr; gap: 2rem; }
-            .feature-row:nth-child(even) { direction: ltr; }
-            .flow-container::before { left: 40px; }
-            .flow-step, .flow-step:nth-child(even) { flex-direction: column; align-items: flex-end; }
-            .flow-icon { left: 40px; transform: translate(-50%, -50%); }
-            .flow-content { width: calc(100% - 90px); }
-            .roi-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .roi-card.highlight { transform: scale(1); }
-            .budget-explanation { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 768px) {
-            .nav-links { display: none; } /* Simplified for mobile */
-            .hero { padding-top: 8rem; }
-            .hero h1 { font-size: 2.5rem; }
-        }
-
-        /* Animations */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo">Norte<span>Conectado</span></a>
+    <nav>
+        <div class="container nav-inner">
+            <div>NORTE CONECTADO <span class="text-primary">v9</span></div>
             <div class="nav-links">
-                <a href="#resumo">O Fator v9</a>
                 <a href="#macro">Visão Macro</a>
-                <a href="#detalhamento">Detalhamento</a>
-                <a href="#fluxo">Operação</a>
-                <a href="#pilares">Pilares Estratégicos</a>
-                <a href="#resultados">Resultados (ROI)</a>
+                <a href="#sacadas">Estratégias na Prática</a>
+                <a href="#orcamento">Tabela Oficial</a>
             </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Orçamento Executivo v9</h1>
+            <p>100% do escopo mantido. Zero burocracia. Foco absoluto em conversão e compliance nos 6 polos ao longo de 24 meses.</p>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container hero-content reveal">
-            <span class="badge" style="display:inline-block; background: white; color: var(--primary); padding: 8px 16px; border-radius: 20px; font-weight: 700; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">DOCUMENTO EXECUTIVO ESTRATÉGICO</span>
-            <h1>Orçamento v9: Eficiência como Motor de Sucesso</h1>
-            <p class="subtitle">Análise de Viabilidade Operacional e Estruturação Financeira do Programa Norte Conectado — Domínio Social (24 Meses).</p>
-            <a href="#resumo" class="btn-primary">Explorar o Orçamento <i class="fa-solid fa-arrow-down ml-2"></i></a>
+    <div class="container metrics" id="macro">
+        <div class="metric-card">
+            <div class="metric-val">R$ 3.47M</div>
+            <div class="metric-label">Custo Total (24 Meses)</div>
         </div>
-    </section>
-
-    <!-- Executive Summary -->
-    <section id="resumo" class="container">
-        <div class="feature-row reveal">
-            <div class="feature-text">
-                <span class="badge" style="color: var(--primary); font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">A Tese da v9</span>
-                <h2 style="font-size: 3rem; margin: 1rem 0;">Menos Custo.<br>Mais Impacto.</h2>
-                <p class="text-lead">O Orçamento v9 não trata apenas de cortes financeiros. Trata-se de uma <strong>reengenharia profunda de processos</strong> focada em garantir o sucesso estrutural e a escalabilidade do programa.</p>
-                <p>Nesta versão definitiva, garantimos <strong>100% da entrega final proposta</strong> — 6 polos operacionais na Amazônia, 140 beneficiários atendidos e a plataforma VTEX em pleno funcionamento — substituindo processos analógicos e equipamentos de alta complexidade por inteligência de software, gestão em nuvem e tráfego de performance.</p>
-                
-                <div class="success-box">
-                    <h4><i class="fa-solid fa-rocket"></i> A Meta Superada</h4>
-                    <p>Reduzimos o custo total para <strong>R$ 3.475.254,96</strong>. O projeto agora não apenas se enquadra na viabilidade financeira, mas blinda a operação contra riscos logísticos, fiscais e gargalos de auditoria.</p>
-                </div>
-            </div>
-            <div class="feature-img">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1000" alt="Equipe executiva a analisar dados numa reunião de estratégia">
-            </div>
+        <div class="metric-card">
+            <div class="metric-val text-success">R$ 1.59M</div>
+            <div class="metric-label">Economia Gerada (-33%)</div>
         </div>
-    </section>
-
-    <!-- Budget Overview (Macro) -->
-    <section id="macro" class="bg-light">
-        <div class="container reveal">
-            <div class="section-header">
-                <span class="badge">Alocação de R$ 3.47M</span>
-                <h2>Visão Macro do Orçamento</h2>
-                <p class="text-lead">Distribuição global dos recursos ao longo de 24 meses para garantir o funcionamento ininterrupto do ecossistema Norte Conectado.</p>
-            </div>
-
-            <div class="budget-grid">
-                <div class="budget-card c-blue">
-                    <h4>Capital Humano</h4>
-                    <div class="percent">55%</div>
-                    <div class="val">R$ 1.91M</div>
-                    <p class="text-sm">Folha de 21 Colaboradores (parametrizada pelo CAGED) e retenção integral da <strong>Agência Econverse</strong> (R$ 9k/mês) para gestão da VTEX.</p>
-                </div>
-                
-                <div class="budget-card c-green">
-                    <h4>Marketing, Mídia & SaaS</h4>
-                    <div class="percent">23%</div>
-                    <div class="val">R$ 800k</div>
-                    <p class="text-sm">Campanhas de tráfego pago, influenciadores regionais e ecossistema digital (VTEX, Prosas, Klaviyo, Onfly e Ubersuggest).</p>
-                </div>
-
-                <div class="budget-card c-orange">
-                    <h4>Operação & Insumos</h4>
-                    <div class="percent">16%</div>
-                    <div class="val">R$ 540k</div>
-                    <p class="text-sm">Fundo logístico (caixas, plásticos, fitas), deslocamentos aéreos e hospedagem para missões trimestrais nos 6 polos operacionais.</p>
-                </div>
-
-                <div class="budget-card c-slate">
-                    <h4>Backoffice & CAPEX</h4>
-                    <div class="percent">6%</div>
-                    <div class="val">R$ 225k</div>
-                    <p class="text-sm">Mensalidades de Contabilidade Cloud, Jurídico (OAB) e compra única (Ano 1) de Webcams 4K, Impressoras e Balanças Digitais.</p>
-                </div>
-            </div>
+        <div class="metric-card">
+            <div class="metric-val text-primary">R$ 1.034</div>
+            <div class="metric-label">Custo Mensal / Beneficiário</div>
         </div>
-    </section>
+        <div class="metric-card">
+            <div class="metric-val">140</div>
+            <div class="metric-label">Empreendedores Ativos</div>
+        </div>
+    </div>
 
-    <!-- Detailed Budget Table -->
-    <section id="detalhamento" class="container">
-        <div class="section-header reveal">
-            <span class="badge">Análise a Fundo</span>
-            <h2>Detalhamento Analítico das 10 Rubricas</h2>
-            <p class="text-lead">Como os R$ 3.475.254,96 estão distribuídos exatamente entre o Ano 1 (Implantação) e o Ano 2 (Operação Plena).</p>
+    <section id="sacadas" class="container">
+        <div class="section-header">
+            <h2>As 6 Decisões de Eficiência</h2>
+            <p>Como reduzimos custos na prática sem perder qualidade.</p>
         </div>
 
-        <div class="reveal">
-            <div class="table-container">
-                <table class="budget-table">
-                    <thead>
-                        <tr>
-                            <th>Categoria / Rubrica Orçamental</th>
-                            <th class="currency">Ano 1 (R$)</th>
-                            <th class="currency">Ano 2 (R$)</th>
-                            <th>Observação / Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1. Capital Humano (Equipa Interna + Agência Econverse)</td>
-                            <td class="currency">981.044,64</td>
-                            <td class="currency">981.044,64</td>
-                            <td>21 col. (Salários mín. mercado) + R$ 9.000/mês Econverse</td>
-                        </tr>
-                        <tr>
-                            <td><strong>2. Tráfego Pago, Influenciadores e Divulgação</strong></td>
-                            <td class="currency">220.000,00</td>
-                            <td class="currency">220.000,00</td>
-                            <td>Conversão digital ativa (Ads) e prova social (Influenciadores)</td>
-                        </tr>
-                        <tr>
-                            <td>3. Viagens e Diárias Corporativas (Onfly)</td>
-                            <td class="currency">110.000,00</td>
-                            <td class="currency">110.000,00</td>
-                            <td>4 missões/ano por polo c/ antecedência bloqueada (30 dias)</td>
-                        </tr>
-                        <tr>
-                            <td>4. Curadoria e Seleção Digital (Plataforma Prosas)</td>
-                            <td class="currency">96.000,00</td>
-                            <td class="currency">96.000,00</td>
-                            <td>Licença recorrente. "Blind review" e auditoria digital</td>
-                        </tr>
-                        <tr>
-                            <td>5. Sustentação de TI / VTEX</td>
-                            <td class="currency">72.000,00</td>
-                            <td class="currency">72.000,00</td>
-                            <td>Fee base VTEX + Infraestrutura operacional do marketplace</td>
-                        </tr>
-                        <tr>
-                            <td>6. Licenciamento do Ecossistema SaaS</td>
-                            <td class="currency">90.387,84</td>
-                            <td class="currency">120.687,84</td>
-                            <td>Adobe, Ubersuggest, Klaviyo. Ano 2 inclui +R$ 30.300 (Bonifiq)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>7. CAPEX — Kits de Produção Digital (6 polos)</strong></td>
-                            <td class="currency">85.410,00</td>
-                            <td class="currency">—</td>
-                            <td>Custo único: Laptops, Webcams 4K IA, Argox, Balanças 200kg</td>
-                        </tr>
-                        <tr>
-                            <td>8. Assessoria Contábil Cloud</td>
-                            <td class="currency">18.000,00</td>
-                            <td class="currency">18.000,00</td>
-                            <td>Plano Escala ContDigital/Contabilizei (R$ 1.500/mês)</td>
-                        </tr>
-                        <tr>
-                            <td>9. Assessoria Jurídica e Compliance Especializado</td>
-                            <td class="currency">54.000,00</td>
-                            <td class="currency">54.000,00</td>
-                            <td>Retenção alinhada à Tabela OAB (R$ 4.500/mês)</td>
-                        </tr>
-                        <tr>
-                            <td>10. Insumos de Embalagem e Expedição</td>
-                            <td class="currency">38.340,00</td>
-                            <td class="currency">38.340,00</td>
-                            <td>Caixas, fitas BOPP, plástico bolha e etiquetas térmicas mensais</td>
-                        </tr>
-                        <tr class="row-total">
-                            <td>TOTAL GERAL POR ANO</td>
-                            <td class="currency">R$ 1.765.182,48</td>
-                            <td class="currency">R$ 1.710.072,48</td>
-                            <td><strong>TOTAL: R$ 3.475.254,96</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="strategy-grid">
             
-            <div class="budget-explanation">
-                <div class="explanation-card">
-                    <h4 style="color: var(--primary); margin-bottom: 10px; font-family: 'Inter', sans-serif;"><i class="fa-solid fa-arrow-down-up-across-line"></i> A Lógica da Variação Anual</h4>
-                    <p style="font-size: 0.95rem; margin: 0;">O Ano 2 <strong>não</strong> é uma fase residual; a operação decorre na sua totalidade. A leve redução do Ano 1 para o Ano 2 justifica-se pela eliminação do CAPEX (equipamentos físicos já comprados e amortizados). Essa "sobra" é estrategicamente utilizada para reativar o SaaS de gamificação <strong>Bonifiq</strong> (R$ 30.300) no mês 13, altura em que o tráfego pago já construiu uma base de clientes sólida pronta para a fidelização e recompra.</p>
+            <!-- Strategy 1 -->
+            <div class="strategy-card">
+                <div class="strategy-title">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                    <h3>Curadoria às Cegas</h3>
                 </div>
-                <div class="explanation-card">
-                    <h4 style="color: var(--primary); margin-bottom: 10px; font-family: 'Inter', sans-serif;"><i class="fa-solid fa-box"></i> Detalhe: Insumos de Expedição</h4>
-                    <p style="font-size: 0.95rem; margin: 0;">Diferente do CAPEX (impressoras Argox e Balanças), que são investimentos únicos no Ano 1, a Rubrica 10 providencia um fundo rotativo rigoroso (R$ 3.195/mês total para os 6 polos) focado no reabastecimento contínuo de caixas logísticas 40x30x20cm, fita adesiva BOPP, plástico bolha e tinta/etiquetas térmicas para as Argox. Isto garante que o processo de embalamento na origem nunca pare por falta de material básico.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Operational Flow -->
-    <section id="fluxo" class="bg-light">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="badge">Jornada Operacional</span>
-                <h2>O Ecossistema em Funcionamento</h2>
-                <p class="text-lead">Como os investimentos orçados se ligam, passo a passo, na jornada de sucesso do empreendedor.</p>
-            </div>
-
-            <div class="flow-container">
-                <!-- Step 1 -->
-                <div class="flow-step reveal">
-                    <div class="flow-icon"><i class="fa-solid fa-filter"></i></div>
-                    <div class="flow-content">
-                        <span class="step-num">Passo 01</span>
-                        <h3>Captação & Seleção</h3>
-                        <p>Utilização da licença corporativa da <strong>Plataforma Prosas</strong> para inscrição e "Blind Review" dos candidatos nos 6 polos. Pareceristas avaliam propostas às cegas, garantindo uma auditoria 100% digital e a escolha imparcial dos 140 melhores produtores.</p>
+                <div class="strategy-content">
+                    <div class="vs-box">
+                        <div class="vs-old">
+                            <div class="vs-title"><i class="fa-solid fa-xmark"></i> Antes (v3)</div>
+                            Consultoria manual custava <strong>R$ 192.000</strong>. Suscetível a erros e viés de escolha local.
+                        </div>
+                        <div class="vs-new">
+                            <div class="vs-title"><i class="fa-solid fa-check"></i> Agora (v9)</div>
+                            Plataforma SaaS <strong>Prosas</strong> custa <strong>R$ 96.000</strong> (-50%). 100% auditável.
+                        </div>
                     </div>
-                </div>
-                <!-- Step 2 -->
-                <div class="flow-step reveal">
-                    <div class="flow-icon"><i class="fa-solid fa-file-contract"></i></div>
-                    <div class="flow-content">
-                        <span class="step-num">Passo 02</span>
-                        <h3>Formalização & Backoffice</h3>
-                        <p>Aprovação de contratos validada pela <strong>Assessoria Jurídica retida</strong> e gestão dos repasses através da <strong>Contabilidade Cloud</strong>. O empreendedor entra no programa com total governança, sem gerar riscos fiscais ou laborais para a coordenação.</p>
-                    </div>
-                </div>
-                <!-- Step 3 -->
-                <div class="flow-step reveal">
-                    <div class="flow-icon"><i class="fa-solid fa-camera"></i></div>
-                    <div class="flow-content">
-                        <span class="step-num">Passo 03</span>
-                        <h3>Produção & E-commerce</h3>
-                        <p>Os produtores criam conteúdo usando os kits CAPEX: <strong>Webcams Logitech 4K com IA</strong> e microfones sem fios. O material e os produtos são catalogados na plataforma <strong>VTEX</strong>, operada e estabilizada remotamente pela agência especialista <strong>Econverse</strong>.</p>
-                    </div>
-                </div>
-                <!-- Step 4 -->
-                <div class="flow-step reveal">
-                    <div class="flow-icon"><i class="fa-solid fa-box-check"></i></div>
-                    <div class="flow-content" style="border-color: var(--secondary);">
-                        <span class="step-num" style="color: var(--secondary);">Passo 04</span>
-                        <h3 style="color: var(--secondary);">Venda & Logística Perfeita</h3>
-                        <p>O cliente compra online (atraído por tráfego pago, influenciadores e SEO). No polo, o produtor usa o stock de Insumos, pesa o item exato na <strong>Balança Suspensa 200kg</strong>, emite a etiqueta na <strong>Argox</strong> e expede. Zero atrito de frete, zero cubagem extra, cliente fidelizado.</p>
+                    <div class="example-box">
+                        <strong>Exemplo Prático:</strong>
+                        O candidato de Manaus envia os documentos no portal. O sistema omite nome e cidade ("Blind Review"). O parecerista em SP aprova baseado apenas no potencial de venda na VTEX. Se houver auditoria futura do Ministério, extrai-se um relatório com o rastro exato da aprovação.
                     </div>
                 </div>
             </div>
+
+            <!-- Strategy 2 -->
+            <div class="strategy-card">
+                <div class="strategy-title">
+                    <i class="fa-solid fa-plane-lock"></i>
+                    <h3>Trava de Viagens</h3>
+                </div>
+                <div class="strategy-content">
+                    <div class="vs-box">
+                        <div class="vs-old">
+                            <div class="vs-title"><i class="fa-solid fa-xmark"></i> Antes (v3)</div>
+                            Compra de passagens soltas custava <strong>R$ 180.000</strong>. Descontrole de tarifas na Região Norte.
+                        </div>
+                        <div class="vs-new">
+                            <div class="vs-title"><i class="fa-solid fa-check"></i> Agora (v9)</div>
+                            Gestão na plataforma <strong>Onfly</strong> por <strong>R$ 110.000</strong> (-38%). Trava sistêmica ativada.
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <strong>Exemplo Prático:</strong>
+                        Se a missão ao polo de Belém é dia 30, o colaborador tenta emitir passagem dia 15. O sistema Onfly <strong>bloqueia a emissão</strong>, exigindo a compra com 30 dias de antecedência. Isso força o planejamento e garante até 61% de desconto nas tarifas aéreas da região.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy 3 -->
+            <div class="strategy-card">
+                <div class="strategy-title">
+                    <i class="fa-solid fa-weight-scale"></i>
+                    <h3>Logística à Prova de Multa</h3>
+                </div>
+                <div class="strategy-content">
+                    <div class="vs-box">
+                        <div class="vs-old">
+                            <div class="vs-title"><i class="fa-solid fa-xmark"></i> Antes (v3)</div>
+                            Pesos informados no "olhômetro". Gerava multas pesadas de Correios por erro de cubagem.
+                        </div>
+                        <div class="vs-new">
+                            <div class="vs-title"><i class="fa-solid fa-check"></i> Agora (v9)</div>
+                            Inclusão de 1 Balança Suspensa 200kg + Etiquetadora Argox por polo. Custo: <strong>R$ 34,66</strong>/balança.
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <strong>Exemplo Prático:</strong>
+                        O produtor recebe o pedido. Ele pendura a caixa na balança digital (peso exato: 3.2kg). Digita 3.2kg na VTEX, emite a etiqueta na Argox térmica e despacha. A transportadora recebe a caixa com o peso exato e não cobra a taxa de "reajuste de cubagem".
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy 4 -->
+            <div class="strategy-card">
+                <div class="strategy-title">
+                    <i class="fa-solid fa-video"></i>
+                    <h3>CAPEX "Auto-Piloto"</h3>
+                </div>
+                <div class="strategy-content">
+                    <div class="vs-box">
+                        <div class="vs-old">
+                            <div class="vs-title"><i class="fa-solid fa-xmark"></i> Antes (v3)</div>
+                            Câmeras DSLR complexas (R$ 137k total). Exigiam operador de vídeo treinado em cada polo.
+                        </div>
+                        <div class="vs-new">
+                            <div class="vs-title"><i class="fa-solid fa-check"></i> Agora (v9)</div>
+                            Webcams Logitech 4K com IA (R$ 85k total). Queda de 37% no custo e zero necessidade de técnico.
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <strong>Exemplo Prático:</strong>
+                        O empreendedor senta para gravar um vídeo do seu produto. Ele não sabe operar foco de câmera. A webcam Logitech usa Inteligência Artificial ("Auto-framing") para focar, seguir o rosto e ajustar a luz sozinha enquanto ele se mexe. O vídeo vai pro YouTube com qualidade 4K profissional.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy 5 -->
+            <div class="strategy-card">
+                <div class="strategy-title">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <h3>Venda > Burocracia</h3>
+                </div>
+                <div class="strategy-content">
+                    <div class="vs-box">
+                        <div class="vs-old">
+                            <div class="vs-title"><i class="fa-solid fa-xmark"></i> Antes (v3)</div>
+                            Escritório de contabilidade físico (caro) e time interno inchado tentando programar a VTEX.
+                        </div>
+                        <div class="vs-new">
+                            <div class="vs-title"><i class="fa-solid fa-check"></i> Agora (v9)</div>
+                            Contabilidade Cloud (R$ 1.5k/mês) e agência especialista <strong>Econverse</strong> fixada em R$ 9k/mês.
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <strong>Exemplo Prático:</strong>
+                        Terceirizamos a "dor de cabeça". A Contabilizei gera impostos no automático. A Econverse garante que o botão de "Comprar" da VTEX nunca saia do ar. A verba economizada foi inteira injetada em <strong>Tráfego Pago e Influenciadores (R$ 220.000/ano)</strong>. Atraímos o cliente e ele converte na hora.
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- Deep Dive Pillars -->
-    <section id="pilares" class="container">
-        <div class="section-header reveal">
-            <span class="badge">Aprofundamento</span>
-            <h2>Pilares Estratégicos da v9</h2>
-            <p class="text-lead">Detalhamento extremo de como as escolhas tecnológicas e operacionais asseguram o retorno sobre o investimento.</p>
+    <section id="orcamento" class="container" style="border: none;">
+        <div class="section-header">
+            <h2>Quadro Orçamentário Final</h2>
+            <p>Distribuição exata das rubricas para os dois anos de operação.</p>
         </div>
 
-        <!-- Pillar 1: Curadoria & Backoffice -->
-        <div class="feature-row reveal">
-            <div class="feature-img">
-                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1000" alt="Pessoa a analisar dados num portátil (Auditoria Digital)">
-            </div>
-            <div class="feature-text">
-                <h3>Curadoria Digital e Backoffice Blindado</h3>
-                <p>A transição de processos manuais para plataformas na cloud transformou a governança do projeto, reduzindo custos para metade e elevando a segurança jurídica.</p>
-                <ul class="feature-list">
-                    <li><i class="fa-solid fa-shield-halved"></i> <strong>Plataforma Prosas (R$ 8k/mês):</strong> Substitui R$ 192.000 de consultorias manuais de seleção. Cria um rasto de auditoria inviolável, essencial para prestação de contas no Terceiro Setor.</li>
-                    <li><i class="fa-solid fa-cloud"></i> <strong>Contabilidade Cloud (R$ 1.5k/mês):</strong> Utilização de plataformas tipo Contabilizei/ContDigital no plano Escala. Automatiza DREs e folhas de vencimento de forma centralizada.</li>
-                    <li><i class="fa-solid fa-scale-balanced"></i> <strong>Jurídico OAB (R$ 4.5k/mês):</strong> Contrato estritamente alinhado à tabela da Ordem dos Advogados, mitigando riscos em parcerias comerciais.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Pillar 2: Econverse & Human Capital -->
-        <div class="feature-row reveal">
-            <div class="feature-img">
-                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1000" alt="Equipa de developers a trabalhar numa agência moderna">
-            </div>
-            <div class="feature-text">
-                <h3>A Máquina de Vendas: Capital Humano e Agência VTEX</h3>
-                <p>Em vez de inflacionar a folha de pagamentos tentando criar uma agência interna do zero, a v9 calibrou a equipa base e externalizou a alta complexidade.</p>
-                <ul class="feature-list">
-                    <li><i class="fa-solid fa-users-gear"></i> <strong>Equipa Interna Calibrada:</strong> 21 posições estratégicas (Designers, Developers, Agentes locais) niveladas ao piso de mercado atualizado (CAGED/Glassdoor), evitando a rotação de pessoal.</li>
-                    <li><i class="fa-solid fa-store"></i> <strong>Agência Econverse (R$ 9k/mês):</strong> Valor agressivamente negociado para garantir suporte de Nível 2. Estes assumem a responsabilidade técnica da VTEX: montras online, estabilidade de integrações de pagamento e arquitetura de navegação.</li>
-                </ul>
-                <div class="success-box">
-                    <h4><i class="fa-solid fa-cart-arrow-down"></i> Conversão em Vendas</h4>
-                    <p>O empreendedor social terá à sua disposição um e-commerce com estabilidade e usabilidade (UX) comparáveis aos grandes retalhistas do país. A tecnologia sai do caminho para que a venda aconteça.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pillar 3: CAPEX & Logistics -->
-        <div class="feature-row reveal">
-            <div class="feature-img">
-                <img src="https://images.unsplash.com/photo-1580674684081-77648f517b23?auto=format&fit=crop&q=80&w=1000" alt="Processo logístico com pacotes e caixas para e-commerce">
-            </div>
-            <div class="feature-text">
-                <h3>Autonomia Audiovisual e Perfeição Logística</h3>
-                <p>O CAPEX (investimento em bens) do Ano 1 sofreu a mudança mais inteligente do orçamento, baixando a barreira técnica para os empreendedores locais e ribeirinhos.</p>
-                <ul class="feature-list">
-                    <li><i class="fa-solid fa-video"></i> <strong>Webcams 4K com IA:</strong> Descarte de câmaras DSLR complexas. Adoção de Logitech MX Brio 4K + DJI Mic. O recurso de "Auto-framing" (Inteligência Artificial) faz o corte automático de câmara sem necessidade de um operador de vídeo.</li>
-                    <li><i class="fa-solid fa-print"></i> <strong>Impressão Argox:</strong> Etiquetadoras térmicas industriais homologadas pela VTEX, acabando com os improvisos na expedição.</li>
-                    <li><i class="fa-solid fa-weight-scale"></i> <strong>A Balança de R$ 34,66:</strong> A grande inovação na redução de atrito. Balanças digitais suspensas de 200kg em cada polo eliminam a 100% as multas das transportadoras por "cubagem incorreta" informada no sistema.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Pillar 4: SaaS, Travel & Performance -->
-        <div class="feature-row reveal">
-            <div class="feature-img">
-                <img src="https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=1000" alt="Dashboard de marketing digital e campanhas de media">
-            </div>
-            <div class="feature-text">
-                <h3>Performance: Tráfego Pago e Stack de Growth</h3>
-                <p>O antigo orçamento estático de "mobilização" foi remanejado para estratégias ativas de performance e atração de clientes qualificados.</p>
-                <ul class="feature-list">
-                    <li><i class="fa-solid fa-bullhorn"></i> <strong>Tráfego Pago & Influenciadores (R$ 220k/ano):</strong> Injeção de verba em campanhas de conversão (Meta/Google Ads) e contratação de influenciadores regionais para gerar prova social autêntica e tração imediata na loja VTEX.</li>
-                    <li><i class="fa-solid fa-envelope-open-text"></i> <strong>Retenção (Klaviyo) e SEO:</strong> O tráfego atraído é cativado pelo funil de e-mail marketing (Klaviyo) e estratégias orgânicas (Ubersuggest), baixando o Custo de Aquisição de Clientes (CAC).</li>
-                    <li><i class="fa-solid fa-plane-up"></i> <strong>Economia Reinvestida (Onfly):</strong> A eficiência da trava de 30 dias na emissão de voos na plataforma Onfly (reduzindo o custo aéreo em até 61%) viabiliza as 4 missões anuais da coordenação e é o que financia grande parte da expansão da verba de marketing.</li>
-                </ul>
-            </div>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rubrica Executiva</th>
+                    <th class="val-num">Ano 1 (Implantação)</th>
+                    <th class="val-num">Ano 2 (Operação Plena)</th>
+                    <th>Status / Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. Capital Humano (21 Colab. + Econverse R$ 9k)</td>
+                    <td class="val-num">R$ 981.044,64</td>
+                    <td class="val-num">R$ 981.044,64</td>
+                    <td><span class="text-success"><i class="fa-solid fa-check"></i> Fixado CAGED</span></td>
+                </tr>
+                <tr>
+                    <td>2. Tráfego Pago e Influenciadores</td>
+                    <td class="val-num">R$ 220.000,00</td>
+                    <td class="val-num">R$ 220.000,00</td>
+                    <td><span class="text-success"><i class="fa-solid fa-check"></i> Performance Ativa</span></td>
+                </tr>
+                <tr>
+                    <td>3. Viagens e Diárias Corporativas (Onfly)</td>
+                    <td class="val-num">R$ 110.000,00</td>
+                    <td class="val-num">R$ 110.000,00</td>
+                    <td><span class="text-success"><i class="fa-solid fa-check"></i> Trava 30 Dias</span></td>
+                </tr>
+                <tr>
+                    <td>4. Curadoria e Seleção Digital (Prosas)</td>
+                    <td class="val-num">R$ 96.000,00</td>
+                    <td class="val-num">R$ 96.000,00</td>
+                    <td><span class="text-success"><i class="fa-solid fa-check"></i> Blind Review</span></td>
+                </tr>
+                <tr>
+                    <td>5. Sustentação de TI / VTEX</td>
+                    <td class="val-num">R$ 72.000,00</td>
+                    <td class="val-num">R$ 72.000,00</td>
+                    <td><span class="text-success"><i class="fa-solid fa-check"></i> Infra Mantida</span></td>
+                </tr>
+                <tr>
+                    <td>6. Licenciamento SaaS</td>
+                    <td class="val-num">R$ 90.387,84</td>
+                    <td class="val-num">R$ 120.687,84</td>
+                    <td><span class="text-primary"><i class="fa-solid fa-arrow-up"></i> +Bonifiq Ano 2</span></td>
+                </tr>
+                <tr>
+                    <td>7. CAPEX — Kits (Webcams 4K, Argox, Balança)</td>
+                    <td class="val-num">R$ 85.410,00</td>
+                    <td class="val-num">—</td>
+                    <td><span class="text-primary"><i class="fa-solid fa-minus"></i> Custo Único</span></td>
+                </tr>
+                <tr>
+                    <td>8. Assessoria Contábil Cloud</td>
+                    <td class="val-num">R$ 18.000,00</td>
+                    <td class="val-num">R$ 18.000,00</td>
+                    <td><span class="text-success"><i class="fa-solid fa-check"></i> Escala Contabilizei</span></td>
+                </tr>
+                <tr>
+                    <td>9. Assessoria Jurídica e Compliance</td>
+                    <td class="val-num">R$ 54.000,00</td>
+                    <td class="val-num">R$ 54.000,00</td>
+                    <td><span class="text-success"><i class="fa-solid fa-check"></i> Tabela OAB</span></td>
+                </tr>
+                <tr>
+                    <td>10. Insumos de Expedição (Caixas, Fitas, Ribbon)</td>
+                    <td class="val-num">R$ 38.340,00</td>
+                    <td class="val-num">R$ 38.340,00</td>
+                    <td><span class="text-success"><i class="fa-solid fa-check"></i> Reposição Contínua</span></td>
+                </tr>
+                <tr class="total-row">
+                    <td>TOTAL GERAL POR ANO</td>
+                    <td class="val-num">R$ 1.765.182,48</td>
+                    <td class="val-num">R$ 1.710.072,48</td>
+                    <td>TOTAL: R$ 3.475.254,96</td>
+                </tr>
+            </tbody>
+        </table>
     </section>
 
-    <!-- ROI Results Section -->
-    <section id="resultados" class="roi-section">
-        <div class="container reveal">
-            <span class="badge" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">VEREDICTO EXECUTIVO</span>
-            <h2>O Retorno sobre o Investimento</h2>
-            <p class="text-lead" style="color: #cbd5e1; max-width: 800px; margin: 0 auto 4rem auto;">Após todas as otimizações sistémicas, este é o custo real mensal necessário para manter <strong>1 empreendedor com loja ativa, marketing a correr, logística perfeita e suporte.</strong></p>
-
-            <div class="roi-grid">
-                <div class="roi-card">
-                    <div class="val">R$ 1.509</div>
-                    <div class="label">Proposta Inicial (v3)</div>
-                </div>
-                
-                <div class="roi-card highlight">
-                    <div class="val">R$ 1.034</div>
-                    <div class="label">Orçamento Final (v9)</div>
-                    <p style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted); font-weight: 500;">Viabilidade Aprovada</p>
-                </div>
-
-                <div class="roi-card green">
-                    <div class="val">-31,4%</div>
-                    <div class="label">De Redução Absoluta</div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 5rem;">
-                <p style="font-size: 1.25rem; font-family: 'Merriweather', serif; font-style: italic; color: #f8fafc; max-width: 900px; margin: 0 auto;"></p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <h3 style="color: white; margin-bottom: 1rem; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.5rem;">Programa Norte Conectado</h3>
-            <p>Domínio Social — Análise Orçamental v9</p>
-            <p style="margin-top: 2rem; font-size: 0.875rem; color: #475569;">Documento Executivo Gerado em Maio de 2026. Estritamente Confidencial.</p>
-        </div>
-    </footer>
-
-    <!-- Simple Scroll Reveal Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const reveals = document.querySelectorAll('.reveal');
-            
-            const revealOnScroll = function() {
-                const windowHeight = window.innerHeight;
-                const elementVisible = 100;
-                
-                reveals.forEach((reveal) => {
-                    const elementTop = reveal.getBoundingClientRect().top;
-                    if (elementTop < windowHeight - elementVisible) {
-                        reveal.classList.add('active');
-                    }
-                });
-            };
-
-            window.addEventListener('scroll', revealOnScroll);
-            revealOnScroll(); // Trigger once on load
-        });
-    </script>
 </body>
 </html>
+```
