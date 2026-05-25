@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instituto Evereste — Relatório de Marketing Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg:       #f2f3f7;
+  --surface:  #ffffff;
+  --s2:       #f7f8fb;
+  --s3:       #eef0f6;
+  --border:   #e2e5ef;
+  --border2:  #cdd1e0;
+  --text:     #0f1117;
+  --t2:       #3d4155;
+  --muted:    #7b80a0;
+  --hint:     #b8bdd4;
+
+  --g:        #0ea66e;
+  --g-bg:     #e8faf3;
+  --g-b:      #a3e6c8;
+
+  --r:        #e03535;
+  --r-bg:     #fef0f0;
+  --r-b:      #f5b8b8;
+
+  --a:        #d97706;
+  --a-bg:     #fffbeb;
+  --a-b:      #fcd68a;
+
+  --b:        #2563eb;
+  --b-bg:     #eff4ff;
+  --b-b:      #bfcffd;
+
+  --p:        #7c3aed;
+  --p-bg:     #f5f0ff;
+  --p-b:      #c4b0fd;
+
+  --rad:      14px;
+  --rad-lg:   20px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* PAGE */
+.page { max-width: 1100px; margin: 0 auto; padding: 48px 28px 96px; }
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 52px;
+}
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.logo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--text);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 6px 13px;
+  border-radius: 100px;
+}
+.logo-chip svg {
+  width: 12px; height: 12px;
+  stroke: #fff; fill: none; stroke-width: 2.5;
+}
+.report-type {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.h-title {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 1.05;
+}
+.h-title span { color: var(--b); }
+.header-right { text-align: right; flex-shrink: 0; }
+.period-pill {
+  display: inline-block;
+  background: var(--b);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+.h-meta { font-size: 12px; color: var(--muted); line-height: 1.8; }
+.h-meta b { color: var(--t2); font-weight: 600; }
+
+/* SECTION */
+.section { margin-bottom: 52px; }
+.sec-hdr {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.sec-num {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--hint);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  min-width: 22px;
+}
+.sec-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+.sec-line { flex: 1; height: 1.5px; background: var(--border); }
+.sec-sub {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 760px) { .kpi-grid { grid-template-columns: repeat(2,1fr); } }
+.kcard {
+  background: var(--surface);
+  border-radius: var(--rad-lg);
+  padding: 20px 18px 18px;
+  border: 1.5px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: transform .15s, box-shadow .15s;
+}
+.kcard:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.06); }
+.kcard-stripe {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: var(--rad-lg) var(--rad-lg) 0 0;
+}
+.kcard.g .kcard-stripe { background: var(--g); }
+.kcard.r .kcard-stripe { background: var(--r); }
+.kcard.a .kcard-stripe { background: var(--a); }
+.kcard.b .kcard-stripe { background: var(--b); }
+.kcard.p .kcard-stripe { background: var(--p); }
+.kcard-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 10px;
+}
+.kcard-val {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.kcard-sub { font-size: 11.5px; color: var(--muted); font-weight: 500; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 100px;
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+}
+.pill-g { background: var(--g-bg); color: var(--g); border: 1px solid var(--g-b); }
+.pill-r { background: var(--r-bg); color: var(--r); border: 1px solid var(--r-b); }
+.pill-a { background: var(--a-bg); color: var(--a); border: 1px solid var(--a-b); }
+.pill-b { background: var(--b-bg); color: var(--b); border: 1px solid var(--b-b); }
+.pill-n { background: var(--s3); color: var(--muted); border: 1px solid var(--border2); }
+
+/* CHART CARD */
+.chart-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--rad-lg);
+  padding: 24px 24px 20px;
+  margin-bottom: 14px;
+}
+.chart-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.chart-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.015em;
+}
+.chart-sub { font-size: 11.5px; color: var(--muted); margin-top: 3px; font-weight: 500; }
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+.leg-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.ldot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.ldot.rnd { border-radius: 50%; }
+.chart-inner { position: relative; }
+
+/* TWO COL */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+/* TABLE */
+.tbl-wrap {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--rad-lg);
+  overflow: hidden;
+}
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.tbl thead tr { background: var(--s2); border-bottom: 1.5px solid var(--border); }
+.tbl th {
+  padding: 11px 15px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-align: left;
+}
+.tbl th:not(:first-child) { text-align: center; }
+.tbl td {
+  padding: 11px 15px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+  color: var(--text);
+}
+.tbl td:not(:first-child) { text-align: center; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: var(--s2); }
+.c-muted { color: var(--muted); font-size: 12px; }
+.c-meta { color: var(--hint); font-style: italic; }
+.c-g { color: var(--g); font-weight: 700; }
+.c-a { color: var(--a); font-weight: 700; }
+.c-r { color: var(--r); font-weight: 700; }
+
+/* FAROL */
+.farol {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 100px;
+}
+.farol::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.farol-g { background: var(--g-bg); color: var(--g); border: 1px solid var(--g-b); }
+.farol-g::before { background: var(--g); }
+.farol-a { background: var(--a-bg); color: var(--a); border: 1px solid var(--a-b); }
+.farol-a::before { background: var(--a); }
+.farol-r { background: var(--r-bg); color: var(--r); border: 1px solid var(--r-b); }
+.farol-r::before { background: var(--r); }
+.farol-n { background: var(--s3); color: var(--muted); border: 1px solid var(--border2); }
+.farol-n::before { background: var(--hint); }
+
+/* PHASES */
+.phases {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.phase {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--rad);
+  padding: 16px 18px;
+  border-top: 4px solid;
+}
+.phase.pr { border-top-color: var(--r); }
+.phase.pg { border-top-color: var(--g); }
+.phase.pa { border-top-color: var(--a); }
+.phase-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 5px;
+}
+.phase.pr .phase-label { color: var(--r); }
+.phase.pg .phase-label { color: var(--g); }
+.phase.pa .phase-label { color: var(--a); }
+.phase-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.phase-sub { font-size: 11.5px; color: var(--muted); font-weight: 500; }
+
+/* DECISION CARDS */
+.decisions { display: flex; flex-direction: column; gap: 10px; }
+.dec {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--rad-lg);
+  padding: 18px 20px;
+  border-left: 4px solid;
+}
+.dec.dg { border-left-color: var(--g); }
+.dec.dr { border-left-color: var(--r); }
+.dec.da { border-left-color: var(--a); }
+.dec.db { border-left-color: var(--b); }
+.dec-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 7px;
+  letter-spacing: -0.01em;
+}
+.dec.dg .dec-title { color: var(--g); }
+.dec.dr .dec-title { color: var(--r); }
+.dec.da .dec-title { color: var(--a); }
+.dec.db .dec-title { color: var(--b); }
+.dec-body {
+  font-size: 12.5px;
+  color: var(--t2);
+  line-height: 1.7;
+  font-weight: 400;
+}
+.dec-body strong { color: var(--text); font-weight: 700; }
+.evid {
+  margin-top: 10px;
+  padding: 9px 13px;
+  background: var(--s2);
+  border-radius: 8px;
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 500;
+  border-left: 2.5px solid var(--border2);
+}
+.evid strong { color: var(--t2); font-weight: 700; }
+
+/* FOOTER */
+footer {
+  margin-top: 64px;
+  padding-top: 22px;
+  border-top: 1.5px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+footer p { font-size: 11.5px; color: var(--muted); font-weight: 500; }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.section { animation: fadeUp .4s cubic-bezier(.22,.68,0,1.1) both; }
+.section:nth-child(1){animation-delay:.04s}
+.section:nth-child(2){animation-delay:.08s}
+.section:nth-child(3){animation-delay:.12s}
+.section:nth-child(4){animation-delay:.16s}
+.section:nth-child(5){animation-delay:.20s}
+.section:nth-child(6){animation-delay:.24s}
+.section:nth-child(7){animation-delay:.28s}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header class="header">
+  <div>
+    <div class="brand-row">
+      <div class="logo-chip">
+        <svg viewBox="0 0 12 12"><path d="M6 1L11 11H1L6 1Z"/></svg>
+        Instituto Evereste
+      </div>
+      <span class="report-type">Marketing &amp; Publicidade</span>
+    </div>
+    <h1 class="h-title">Relatório de<br><span>Desempenho Digital</span></h1>
+  </div>
+  <div class="header-right">
+    <div class="period-pill">20 fev — 20 mai 2026</div>
+    <div class="h-meta">
+      <b>90 dias</b> · 1º trimestre de operação<br>
+      Plataforma: <b>Instagram · Meta Ads</b><br>
+      Análise: <b>gestão de tráfego</b>
+    </div>
+  </div>
+</header>
+
+<!-- 01 KPIs -->
+<section class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title">Indicadores principais</h2>
+    <div class="sec-line"></div>
+    <span class="sec-sub">Instagram · Meta Ads · fev–mai</span>
+  </div>
+  <div class="kpi-grid">
+    <div class="kcard g">
+      <div class="kcard-stripe"></div>
+      <div class="kcard-label">Seguidores</div>
+      <div class="kcard-val">11.246</div>
+      <div class="kcard-sub">base atual</div>
+      <div class="pill pill-g">+736 no período</div>
+    </div>
+    <div class="kcard g">
+      <div class="kcard-stripe"></div>
+      <div class="kcard-label">CPM médio</div>
+      <div class="kcard-val">R$4,37</div>
+      <div class="kcard-sub">meta: R$8,00</div>
+      <div class="pill pill-g">192% da meta</div>
+    </div>
+    <div class="kcard g">
+      <div class="kcard-stripe"></div>
+      <div class="kcard-label">ER Engajamento</div>
+      <div class="kcard-val">695</div>
+      <div class="kcard-sub">abr · meta: 300</div>
+      <div class="pill pill-g">169% da meta</div>
+    </div>
+    <div class="kcard g">
+      <div class="kcard-stripe"></div>
+      <div class="kcard-label">IEC Cobertura</div>
+      <div class="kcard-val">11.864</div>
+      <div class="kcard-sub">meta: 6.250</div>
+      <div class="pill pill-g">186% da meta</div>
+    </div>
+    <div class="kcard a">
+      <div class="kcard-stripe"></div>
+      <div class="kcard-label">CTR Cliques</div>
+      <div class="kcard-val">2,19%</div>
+      <div class="kcard-sub">abr · meta: 1,88%</div>
+      <div class="pill pill-a">82% tri · abr no alvo</div>
+    </div>
+    <div class="kcard a">
+      <div class="kcard-stripe"></div>
+      <div class="kcard-label">Alcance total</div>
+      <div class="kcard-val">600K</div>
+      <div class="kcard-sub">meta: 700K</div>
+      <div class="pill pill-a">96% da meta</div>
+    </div>
+    <div class="kcard r">
+      <div class="kcard-stripe"></div>
+      <div class="kcard-label">CPS Custo/Seguidor</div>
+      <div class="kcard-val">R$6,82</div>
+      <div class="kcard-sub">abr · meta: R$4,00</div>
+      <div class="pill pill-r">crítico — contextual</div>
+    </div>
+    <div class="kcard b">
+      <div class="kcard-stripe"></div>
+      <div class="kcard-label">Investido Meta Ads</div>
+      <div class="kcard-val">R$6.130</div>
+      <div class="kcard-sub">verba das campanhas</div>
+      <div class="pill pill-b">invoice oficial</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 KPI TABLE -->
+<section class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">02</span>
+    <h2 class="sec-title">KPIs mensais — série histórica</h2>
+    <div class="sec-line"></div>
+    <span class="sec-sub">Jan–abr 2026 · periodicidade trimestral</span>
+  </div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>KPI</th><th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th>
+          <th>Meta tri.</th><th>% Ating.</th><th>Farol</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="c-muted">CPM — custo por mil impressões</td>
+          <td>R$4,45</td><td>R$3,88</td><td>R$4,17</td><td>R$4,82</td>
+          <td class="c-meta">R$8,00</td><td class="c-g">192%</td>
+          <td><span class="farol farol-g">no alvo</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">ER — engajamento</td>
+          <td>106</td><td>57</td><td>345</td><td>695</td>
+          <td class="c-meta">300</td><td class="c-g">169%</td>
+          <td><span class="farol farol-g">no alvo</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">CTR — taxa de cliques</td>
+          <td>1,26%</td><td>1,63%</td><td>1,73%</td><td>2,19%</td>
+          <td class="c-meta">1,88%</td><td class="c-a">82%</td>
+          <td><span class="farol farol-a">atenção</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">ALC — alcance total</td>
+          <td>339.810</td><td>193.638</td><td>140.164</td><td>441.752</td>
+          <td class="c-meta">700.000</td><td class="c-a">96%</td>
+          <td><span class="farol farol-a">atenção</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">IEC — eficiência de cobertura</td>
+          <td>11.237</td><td>11.832</td><td>11.864</td><td>10.370</td>
+          <td class="c-meta">6.250</td><td class="c-g">186%</td>
+          <td><span class="farol farol-g">no alvo</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">CPS — custo por seguidor</td>
+          <td>R$2,38</td><td>R$8,44</td><td>R$7,77</td><td>R$6,82</td>
+          <td class="c-meta">R$4,00</td><td class="c-r">65%</td>
+          <td><span class="farol farol-r">crítico</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 03 CAMPANHAS -->
+<section class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">03</span>
+    <h2 class="sec-title">Campanhas Meta Ads</h2>
+    <div class="sec-line"></div>
+    <span class="sec-sub">11 campanhas concluídas · R$6.130 investidos</span>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-hdr">
+      <div>
+        <div class="chart-title">VPI (visitas ao perfil / cliques) × CTR por campanha</div>
+        <div class="chart-sub">resultados reais das campanhas — barras azuis = resultado, linha laranja = CTR %</div>
+      </div>
+      <div class="legend">
+        <div class="leg-item"><span class="ldot" style="background:#2563eb"></span>VPI / cliques</div>
+        <div class="leg-item"><span class="ldot rnd" style="background:#d97706"></span>CTR %</div>
+      </div>
+    </div>
+    <div class="chart-inner" style="height:230px">
+      <canvas id="cCamp" role="img" aria-label="VPI e CTR por campanha. Maior VPI: Estático Vaga Dev 02 com 7755, CTR 4.39%. Menor CTR: Reels Infovias 0.34%.">VPI: Dev02 7755 · Designer 6084 · TecADM01 3031. CTR: Dev02 4.39%.</canvas>
+    </div>
+  </div>
+
+  <div class="tbl-wrap" style="margin-bottom:14px">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Campanha</th><th>VLR Total</th><th>CPR</th><th>VPI</th>
+          <th>Impressões</th><th>Alcance</th><th>Orç. Diário</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="c-muted">Estático Vaga Desenvolvedor 01</td>
+          <td>R$228,79</td><td>R$0,33</td><td>692</td>
+          <td>51.239</td><td>33.270</td><td>R$200</td>
+          <td><span class="farol farol-n">concluído</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Reels IAAM Abril Azul</td>
+          <td>R$399,70</td><td>R$0,38</td><td>1.051</td>
+          <td>123.991</td><td>66.909</td><td>R$80</td>
+          <td><span class="farol farol-n">concluído</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Reels IA Aplicada Academy</td>
+          <td>R$448,56</td><td>R$0,36</td><td>1.258</td>
+          <td>146.969</td><td>89.828</td><td>R$100</td>
+          <td><span class="farol farol-n">concluído</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Estático Operador Neutro Infovia 02</td>
+          <td>R$539,09</td><td>R$0,39</td><td>1.386</td>
+          <td>162.203</td><td>83.018</td><td>R$80</td>
+          <td><span class="farol farol-n">concluído</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Estático Vaga Tec ADM 03</td>
+          <td>R$394,93</td><td>R$0,23</td><td>1.746</td>
+          <td>77.809</td><td>52.962</td><td>R$80</td>
+          <td><span class="farol farol-n">concluído</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Reels Infovias</td>
+          <td>R$699,16</td><td>R$0,34</td><td>2.051</td>
+          <td>67.567</td><td>42.130</td><td>R$100</td>
+          <td><span class="farol farol-n">concluído</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Estático Operador Neutro Infovia</td>
+          <td>R$799,95</td><td>R$0,38</td><td>2.099</td>
+          <td>225.572</td><td>76.121</td><td>R$100</td>
+          <td><span class="farol farol-n">concluído</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Estático Vaga Tec ADM 01</td>
+          <td>R$419,17</td><td>R$0,14</td><td class="c-g">3.031</td>
+          <td>126.746</td><td>64.723</td><td>R$60</td>
+          <td><span class="farol farol-n">concluído</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Estático Vaga Tec ADM 02</td>
+          <td>R$1.397,80</td><td>R$0,23</td><td class="c-g">6.084</td>
+          <td>219.961</td><td>118.179</td><td>R$200</td>
+          <td><span class="farol farol-n">concluído</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Estático Vaga Desenvolvedor 02</td>
+          <td>R$693,26</td><td class="c-g">R$0,09</td><td class="c-g">7.755</td>
+          <td>154.305</td><td>112.300</td><td>R$100</td>
+          <td><span class="farol farol-g">melhor CPC</span></td>
+        </tr>
+        <tr>
+          <td class="c-muted">Estático Vaga Designer</td>
+          <td>R$1.201</td><td>—</td><td>—</td>
+          <td>—</td><td>—</td><td>R$100</td>
+          <td><span class="farol farol-a">sem dados</span></td>
+        </tr>
+        <tr style="background:var(--s2)">
+          <td style="font-weight:700">Total (11 campanhas)</td>
+          <td style="font-weight:700">R$7.221,41</td>
+          <td style="font-weight:700">R$2,87 méd.</td>
+          <td style="font-weight:700">27.153</td>
+          <td style="font-weight:700">1.356.382</td>
+          <td style="font-weight:700">739.440</td>
+          <td style="font-weight:700">R$1.200</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-hdr">
+        <div>
+          <div class="chart-title">VLR total por campanha</div>
+          <div class="chart-sub">investimento real · R$</div>
+        </div>
+      </div>
+      <div class="chart-inner" style="height:200px">
+        <canvas id="cVlr" role="img" aria-label="VLR total por campanha em reais">TecADM02 R$1397 · Designer R$1201 · Infovia R$799</canvas>
+      </div>
+    </div>
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-hdr">
+        <div>
+          <div class="chart-title">Funil Meta Ads — 90 dias</div>
+          <div class="chart-sub">impressão → conversa iniciada</div>
+        </div>
+      </div>
+      <div class="chart-inner" style="height:200px">
+        <canvas id="cFunil" role="img" aria-label="Funil: 1.403.470 impressões, 600.568 alcance, 34.534 cliques, 23 conversas.">1.4M impressões → 600K alcance → 34K cliques → 23 conversas.</canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 FOLLOWS/UNFOLLOWS -->
+<section class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">04</span>
+    <h2 class="sec-title">Análise de follows e unfollows</h2>
+    <div class="sec-line"></div>
+    <span class="sec-sub">51 pontos · variação diária líquida</span>
+  </div>
+
+  <div class="phases">
+    <div class="phase pr">
+      <div class="phase-label">Fase 1 — fev / mar</div>
+      <div class="phase-title">Rejeição e unfollows</div>
+      <div class="phase-sub">Campanhas de vagas gerando ciclo follow/unfollow. Picos críticos ≥ −8/dia.</div>
+    </div>
+    <div class="phase pg">
+      <div class="phase-label">Fase 2 — abr 1ª quinzena</div>
+      <div class="phase-title">Crescimento qualificado</div>
+      <div class="phase-sub">+158 seguidores em 3 dias consecutivos. Menor unfollow do período.</div>
+    </div>
+    <div class="phase pa">
+      <div class="phase-label">Fase 3 — abr / mai</div>
+      <div class="phase-title">Equilíbrio frágil</div>
+      <div class="phase-sub">Base estabilizando. Crescimento orgânico desacelera sem campanhas ativas.</div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-hdr">
+      <div>
+        <div class="chart-title">Variação líquida diária de seguidores</div>
+        <div class="chart-sub">20 fev a 19 mai 2026 · vermelho = perda · laranja = pico crítico ≥ −8/dia</div>
+      </div>
+      <div class="legend">
+        <div class="leg-item"><span class="ldot" style="background:#0ea66e"></span>Positivo</div>
+        <div class="leg-item"><span class="ldot" style="background:#e03535"></span>Negativo</div>
+        <div class="leg-item"><span class="ldot rnd" style="background:#d97706"></span>Crítico ≥−8</div>
+      </div>
+    </div>
+    <div class="chart-inner" style="height:240px">
+      <canvas id="cLiquid" role="img" aria-label="Variação líquida diária de seguidores fev–mai 2026. Pico +118 em 30/mar. Maior queda −9 em 15/mai.">Variação: +118 (30/mar), −9 (15/mai), −8 (28/mar, 03/mai).</canvas>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-hdr">
+        <div>
+          <div class="chart-title">Follows — dias positivos</div>
+          <div class="chart-sub">saldo positivo por dia · pico +118 em 30/mar</div>
+        </div>
+        <div class="legend">
+          <div class="leg-item"><span class="ldot" style="background:#2563eb"></span>follows</div>
+          <div class="leg-item"><span class="ldot" style="background:#0ea66e"></span>≥ 40</div>
+        </div>
+      </div>
+      <div class="chart-inner" style="height:210px">
+        <canvas id="cFollows" role="img" aria-label="Follows positivos por dia. Pico 118 em 30/mar.">Picos: +118 (30/mar), +57 (12/abr), +53 (11/abr).</canvas>
+      </div>
+    </div>
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-hdr">
+        <div>
+          <div class="chart-title">Unfollows — dias negativos</div>
+          <div class="chart-sub">magnitude absoluta · laranja = crítico ≥ 8</div>
+        </div>
+        <div class="legend">
+          <div class="leg-item"><span class="ldot" style="background:#e03535"></span>unfollow</div>
+          <div class="leg-item"><span class="ldot" style="background:#d97706"></span>≥ 8</div>
+        </div>
+      </div>
+      <div class="chart-inner" style="height:210px">
+        <canvas id="cUnfollows" role="img" aria-label="Unfollows por dia: picos em 28/mar, 03/mai, 15/mai.">Picos: −8 (28/mar), −8 (03/mai), −9 (15/mai).</canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 GASTO META -->
+<section class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">05</span>
+    <h2 class="sec-title">Investimento Meta Ads</h2>
+    <div class="sec-line"></div>
+    <span class="sec-sub">Invoice oficial 20/02–21/05/2026 · R$6.130,05</span>
+  </div>
+  <div class="chart-card">
+    <div class="chart-hdr">
+      <div>
+        <div class="chart-title">Gasto diário × variação de seguidores — abril 2026</div>
+        <div class="chart-sub">correlação entre verba ativa e comportamento da base</div>
+      </div>
+      <div class="legend">
+        <div class="leg-item"><span class="ldot" style="background:#2563eb"></span>Gasto R$</div>
+        <div class="leg-item"><span class="ldot rnd" style="background:#0ea66e"></span>Seguidores</div>
+      </div>
+    </div>
+    <div class="chart-inner" style="height:210px">
+      <canvas id="cGasto" role="img" aria-label="Gasto diário Meta Ads abril e variação de seguidores. ~R$57/dia. Pico +57 em 12/abr.">Gasto ~R$57/dia. Maior crescimento +57 em 12/abr.</canvas>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-hdr">
+      <div>
+        <div class="chart-title">Gasto acumulado mensal — invoice Meta</div>
+        <div class="chart-sub">valores reais pagos · fevereiro a maio 2026</div>
+      </div>
+    </div>
+    <div class="chart-inner" style="height:170px">
+      <canvas id="cMensal" role="img" aria-label="Gasto mensal: fev R$579, mar R$838, abr R$4433, mai R$280.">Fev R$579 · Mar R$838 · Abr R$4.433 · Mai R$280</canvas>
+    </div>
+  </div>
+</section>
+
+<!-- 06 DECISÕES -->
+<section class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">06</span>
+    <h2 class="sec-title">Decisões técnicas</h2>
+    <div class="sec-line"></div>
+    <span class="sec-sub">Análise do gestor de tráfego</span>
+  </div>
+  <div class="decisions">
+
+    <div class="dec dr">
+      <div class="dec-title">Pausa das campanhas — decisão técnica do gestor</div>
+      <div class="dec-body">
+        Campanhas de recrutamento foram pausadas após identificação de <strong>comportamento abrupto de rejeição e unfollows</strong>. Entre 26/fev e 29/mar, 7 dos 9 dias negativos registraram perdas de −3 a −8/dia. O público atraído por vagas seguia o perfil para monitorar oportunidades sem retenção real, degradando o sinal de qualidade de audiência para o algoritmo da Meta.
+        <div class="evid"><strong>Evidência:</strong> CPS R$8,44 (fev) e R$7,77 (mar) — 94% acima da meta de R$4,00. Dias críticos: 28/mar −8, 03/mai −8, 15/mai −9. Alcance caiu de 339K (jan) para 140K (mar) com verba estável.</div>
+      </div>
+    </div>
+
+    <div class="dec da">
+      <div class="dec-title">CPS crítico — justificativa estrutural, não operacional</div>
+      <div class="dec-body">
+        O CPS elevado não é falha de configuração. Campanhas foram <strong>desenhadas para recrutamento</strong> — objetivo primário era visita ao perfil e clique no link, não aquisição de seguidores. Em campanhas de vagas com público qualificado e restrito, CPS alto é tecnicamente esperado e aceitável.
+        <div class="evid"><strong>Evidência:</strong> Vaga Dev 02: 7.755 visitas ao perfil a R$0,09 — menor CPC do período. CTR de 4,39% (média mercado: 1–2%). Campanha entregou seu objetivo primário.</div>
+      </div>
+    </div>
+
+    <div class="dec dg">
+      <div class="dec-title">Viralização 30–31/mar — maior evento de crescimento</div>
+      <div class="dec-body">
+        <strong>+161 seguidores líquidos em 2 dias</strong> sem correlação com gasto pago nessas datas. Conteúdo orgânico ativando audiência qualificada já formada. Demonstra poder de retenção e alinhamento da base com o posicionamento do Instituto.
+        <div class="evid"><strong>Evidência:</strong> 30/mar +118, 31/mar +43. Maior evento positivo dos 90 dias. Sem campanha paga ativa nessas datas.</div>
+      </div>
+    </div>
+
+    <div class="dec dg">
+      <div class="dec-title">Crescimento qualificado — abr 1ª quinzena</div>
+      <div class="dec-body">
+        09, 11 e 12/abr = <strong>+158 seguidores em 3 dias consecutivos</strong>. Menor taxa de unfollow do período inteiro. Base respondendo ao conteúdo após reconfiguração de público. Evidência direta de que a pausa e o ajuste produziram resultado mensurável.
+        <div class="evid"><strong>Evidência:</strong> ER de 57 (fev) para 695 (abr) — crescimento de 1.118%. 67% dos seguidores concentrados em Manaus — audiência local qualificada.</div>
+      </div>
+    </div>
+
+    <div class="dec dr">
+      <div class="dec-title">Mai/26 — base em equilíbrio frágil · momento de reativar</div>
+      <div class="dec-body">
+        8 dos últimos 10 pontos de dados com variação entre −9 e +2. O crescimento orgânico desacelerou após pausa total. <strong>Momento técnico correto para reativar campanhas institucionais</strong> com objetivo separado do recrutamento.
+        <div class="evid"><strong>Evidência:</strong> 15/mai −9 (maior queda do período). Alcance orgânico −45% vs. período anterior. Nenhuma campanha ativa em maio.</div>
+      </div>
+    </div>
+
+    <div class="dec db">
+      <div class="dec-title">Recomendações — 2º trimestre 2026</div>
+      <div class="dec-body">
+        <strong>1. Campanhas institucionais separadas das de recrutamento</strong> — objetivo brand awareness e alcance, não vagas.<br>
+        <strong>2. Ativar LinkedIn Ads</strong> — 1.058 seguidores qualificados (TI, engenharia, negócios). CPC meta R$40, CPM meta R$250. Canal inexplorado com alto potencial institucional.<br>
+        <strong>3. Escalar TikTok</strong> — estreou com ER 2,07% já no alvo. 243 views em estreia. Canal de alto alcance orgânico e baixo custo de produção.<br>
+        <strong>4. Aumentar frequência de Reels</strong> — alcance orgânico em queda. Reels são o principal canal de descoberta do Instagram.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>Instituto Evereste · Seção de Marketing e Publicidade · Plano de ação 2026</p>
+  <p>Gerado em 21/05/2026 · Dados: Instagram Insights · Meta Ads Invoice · GA4</p>
+</footer>
+
+</div>
+
+<script>
+const GC = 'rgba(0,0,0,0.04)';
+const TC = '#9da3bb';
+const baseX = { ticks: { color: TC, font: { size: 9.5 }, maxRotation: 45, autoSkip: true, maxTicksLimit: 20 }, grid: { color: GC } };
+const baseY = (cb) => ({ ticks: { color: TC, font: { size: 10 }, ...(cb ? { callback: cb } : {}) }, grid: { color: GC } });
+
+/* CAMPAIGNS */
+const campNames = ['Dev 01','Reels IAAM','Reels IA Acad','Op.Neutro 02','Tec ADM 03','Reels Infovias','Op.Neutro 01','Tec ADM 01','Tec ADM 02','Dev 02'];
+const campVPI   = [692, 1051, 1258, 1386, 1746, 2051, 2099, 3031, 6084, 7755];
+const campCTR   = [null, null, null, null, null, 0.34, 0.38, null, 0.23, 4.39];
+const campColors = campVPI.map(v => v >= 5000 ? 'rgba(37,99,235,0.85)' : v >= 2000 ? 'rgba(37,99,235,0.65)' : 'rgba(37,99,235,0.4)');
+
+new Chart(document.getElementById('cCamp'), {
+  type: 'bar',
+  data: {
+    labels: campNames,
+    datasets: [
+      { data: campVPI, backgroundColor: campColors, borderRadius: 5, yAxisID: 'y' },
+      { data: campCTR, type: 'line', borderColor: '#d97706', borderWidth: 2.5, pointRadius: campCTR.map(v => v ? 6 : 0), pointBackgroundColor: '#d97706', tension: 0, fill: false, yAxisID: 'y2', spanGaps: true }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+    scales: {
+      x: { ...baseX },
+      y: { ...baseY(v => v.toLocaleString('pt-BR')), title: { display: true, text: 'VPI', color: TC, font: { size: 10 } } },
+      y2: { position: 'right', min: 0, max: 6, ticks: { color: TC, font: { size: 10 }, callback: v => v.toFixed(1) + '%' }, grid: { display: false }, title: { display: true, text: 'CTR', color: TC, font: { size: 10 } } }
+    }
+  }
+});
+
+/* VLR */
+const vlrNames  = ['Dev 01','IAAM','IA Acad','Op.N 02','TecADM03','Infovias','Op.N 01','TecADM01','TecADM02','Dev 02','Designer'];
+const vlrVals   = [228.79, 399.70, 448.56, 539.09, 394.93, 699.16, 799.95, 419.17, 1397.80, 693.26, 1201];
+
+new Chart(document.getElementById('cVlr'), {
+  type: 'bar',
+  data: { labels: vlrNames, datasets: [{ data: vlrVals, backgroundColor: vlrVals.map(v => v >= 1000 ? 'rgba(37,99,235,0.85)' : v >= 600 ? 'rgba(37,99,235,0.65)' : 'rgba(37,99,235,0.4)'), borderRadius: 4 }] },
+  options: {
+    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' R$' + ctx.parsed.y.toFixed(2) } } },
+    scales: { x: { ...baseX, ticks: { ...baseX.ticks, maxTicksLimit: 11 } }, y: { ...baseY(v => 'R$' + v.toLocaleString('pt-BR')) } }
+  }
+});
+
+/* FUNIL */
+new Chart(document.getElementById('cFunil'), {
+  type: 'bar',
+  data: {
+    labels: ['Impressões', 'Alcance', 'Cliques', 'Link', 'Conversas'],
+    datasets: [{ data: [1403470, 600568, 34534, 30208, 23], backgroundColor: ['rgba(37,99,235,.85)','rgba(37,99,235,.7)','rgba(14,166,110,.8)','rgba(14,166,110,.65)','rgba(14,166,110,.5)'], borderRadius: 5 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y.toLocaleString('pt-BR') } } },
+    scales: { x: { ticks: { color: TC, font: { size: 10.5 } }, grid: { display: false } }, y: { type: 'logarithmic', ticks: { color: TC, font: { size: 9 }, callback: v => [1000000,100000,10000,100,10,1].includes(v) ? v.toLocaleString('pt-BR') : null }, grid: { color: GC } } }
+  }
+});
+
+/* FOLLOWS/UNFOLLOWS DATA */
+const raw = [
+  {d:'20/fev',v:25},{d:'22/fev',v:7},{d:'23/fev',v:0},{d:'26/fev',v:-7},
+  {d:'01/mar',v:-4},{d:'03/mar',v:-2},{d:'05/mar',v:-6},{d:'07/mar',v:-7},
+  {d:'09/mar',v:19},{d:'11/mar',v:3},{d:'12/mar',v:2},{d:'14/mar',v:9},
+  {d:'15/mar',v:13},{d:'16/mar',v:1},{d:'18/mar',v:-7},{d:'19/mar',v:-4},
+  {d:'21/mar',v:-7},{d:'23/mar',v:-1},{d:'24/mar',v:1},{d:'26/mar',v:-3},
+  {d:'28/mar',v:-8},{d:'29/mar',v:-7},{d:'30/mar',v:118},{d:'31/mar',v:43},
+  {d:'02/abr',v:37},{d:'04/abr',v:21},{d:'06/abr',v:18},{d:'09/abr',v:48},
+  {d:'11/abr',v:53},{d:'12/abr',v:57},{d:'14/abr',v:40},{d:'16/abr',v:-5},
+  {d:'18/abr',v:-4},{d:'19/abr',v:-6},{d:'21/abr',v:-2},{d:'23/abr',v:17},
+  {d:'24/abr',v:12},{d:'26/abr',v:8},{d:'28/abr',v:10},{d:'30/abr',v:-4},
+  {d:'01/mai',v:-2},{d:'03/mai',v:-8},{d:'04/mai',v:-3},{d:'06/mai',v:-2},
+  {d:'08/mai',v:0},{d:'10/mai',v:-2},{d:'12/mai',v:2},{d:'14/mai',v:-4},
+  {d:'15/mai',v:-9},{d:'18/mai',v:1},{d:'19/mai',v:-2}
+];
+
+/* LIQUID */
+new Chart(document.getElementById('cLiquid'), {
+  type: 'bar',
+  data: {
+    labels: raw.map(r => r.d),
+    datasets: [
+      { data: raw.map(r => r.v), backgroundColor: raw.map(r => r.v < 0 ? 'rgba(224,53,53,0.75)' : 'rgba(14,166,110,0.75)'), borderRadius: 3 },
+      { type: 'line', data: raw.map(r => r.v <= -8 ? r.v : null), borderColor: 'transparent', backgroundColor: '#d97706', pointRadius: 9, pointStyle: 'circle', showLine: false, pointBackgroundColor: '#d97706' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+    scales: {
+      x: { ...baseX },
+      y: { ticks: { color: TC, font: { size: 10 }, callback: v => v > 0 ? '+' + v : v }, grid: { color: GC }, min: -15, suggestedMax: 130 }
+    }
+  }
+});
+
+/* FOLLOWS */
+const pos = raw.filter(r => r.v > 0);
+new Chart(document.getElementById('cFollows'), {
+  type: 'bar',
+  data: { labels: pos.map(r => r.d), datasets: [{ data: pos.map(r => r.v), backgroundColor: pos.map(r => r.v >= 40 ? 'rgba(14,166,110,0.85)' : 'rgba(37,99,235,0.7)'), borderRadius: 4 }] },
+  options: {
+    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: TC, font: { size: 9 }, maxRotation: 45, autoSkip: true, maxTicksLimit: 14 }, grid: { display: false } },
+      y: { ticks: { color: TC, font: { size: 10 }, callback: v => '+' + v }, grid: { color: GC } }
+    }
+  }
+});
+
+/* UNFOLLOWS */
+const neg = raw.filter(r => r.v < 0);
+new Chart(document.getElementById('cUnfollows'), {
+  type: 'bar',
+  data: { labels: neg.map(r => r.d), datasets: [{ data: neg.map(r => Math.abs(r.v)), backgroundColor: neg.map(r => Math.abs(r.v) >= 8 ? 'rgba(217,119,6,0.9)' : 'rgba(224,53,53,0.7)'), borderRadius: 4 }] },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' −' + ctx.parsed.y } } },
+    scales: {
+      x: { ticks: { color: TC, font: { size: 9.5 }, maxRotation: 45 }, grid: { display: false } },
+      y: { ticks: { color: TC, font: { size: 10 }, callback: v => '−' + v }, grid: { color: GC }, suggestedMax: 12 }
+    }
+  }
+});
+
+/* GASTO × SEGUIDORES ABRIL */
+const abrRaw = raw.filter(r => r.d.includes('abr'));
+const gMap = { '02/abr':57.01,'04/abr':57.14,'06/abr':57.58,'09/abr':81.11,'11/abr':59.31,'12/abr':57.93,'14/abr':57.60,'16/abr':56.96,'18/abr':57.32,'19/abr':17.64,'21/abr':16.85,'23/abr':57.09,'24/abr':74.66,'26/abr':57.39,'28/abr':57.32,'30/abr':32.79 };
+new Chart(document.getElementById('cGasto'), {
+  type: 'bar',
+  data: {
+    labels: abrRaw.map(r => r.d),
+    datasets: [
+      { label: 'Gasto', data: abrRaw.map(r => gMap[r.d] || 0), backgroundColor: 'rgba(37,99,235,0.2)', borderColor: 'rgba(37,99,235,0.5)', borderWidth: 1, borderRadius: 5, yAxisID: 'y' },
+      { label: 'Var.', data: abrRaw.map(r => r.v), type: 'line', borderColor: '#0ea66e', borderWidth: 2.5, pointRadius: 5, pointBackgroundColor: abrRaw.map(r => r.v < 0 ? '#e03535' : '#0ea66e'), tension: 0.35, fill: false, yAxisID: 'y2' }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: TC, font: { size: 10 }, maxRotation: 40 }, grid: { color: GC } },
+      y: { ticks: { color: TC, font: { size: 10 }, callback: v => 'R$' + v.toFixed(0) }, grid: { color: GC }, title: { display: true, text: 'Gasto R$', color: TC, font: { size: 10 } } },
+      y2: { position: 'right', ticks: { color: TC, font: { size: 10 }, callback: v => v > 0 ? '+' + v : v }, grid: { display: false }, title: { display: true, text: 'Seguidores', color: TC, font: { size: 10 } } }
+    }
+  }
+});
+
+/* GASTO MENSAL */
+new Chart(document.getElementById('cMensal'), {
+  type: 'bar',
+  data: {
+    labels: ['Fev/26','Mar/26','Abr/26','Mai/26'],
+    datasets: [{
+      data: [579, 838, 4433, 280],
+      backgroundColor: ['rgba(37,99,235,.3)','rgba(37,99,235,.5)','rgba(37,99,235,.9)','rgba(37,99,235,.2)'],
+      borderRadius: 7
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' R$' + ctx.parsed.y.toLocaleString('pt-BR') } } },
+    scales: {
+      x: { ticks: { color: TC, font: { size: 11 } }, grid: { display: false } },
+      y: { ticks: { color: TC, font: { size: 10 }, callback: v => 'R$' + v.toLocaleString('pt-BR') }, grid: { color: GC } }
+    }
+  }
+});
+</script>
+</body>
+</html>
